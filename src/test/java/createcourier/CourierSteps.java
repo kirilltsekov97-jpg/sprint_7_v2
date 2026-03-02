@@ -3,18 +3,20 @@ package createcourier;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
-
+import config.TestBase;
+import model.CourierCreateRequest;
+import model.CourierLoginRequest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class CourierSteps {
+public class CourierSteps extends TestBase{
 
     @Step("Создание курьера")
-    public ValidatableResponse createCourier(String createJson) {
+    public ValidatableResponse createCourier(CourierCreateRequest body) {
         return given()
                 .contentType(ContentType.JSON)
-                .body(createJson)
+                .body(body)
                 .when()
                 .post("/api/v1/courier")
                 .then();
@@ -26,10 +28,10 @@ public class CourierSteps {
     }
 
     @Step("Логин курьера")
-    public ValidatableResponse loginCourier(String loginJson) {
+    public ValidatableResponse loginCourier(CourierLoginRequest body) {
         return given()
                 .contentType(ContentType.JSON)
-                .body(loginJson)
+                .body(body)
                 .when()
                 .post("/api/v1/courier/login")
                 .then()
